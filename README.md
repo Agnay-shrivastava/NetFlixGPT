@@ -1,0 +1,1 @@
+This is a readme file for my netflix gpt project and i will note down all the necessary notes and dependencies
