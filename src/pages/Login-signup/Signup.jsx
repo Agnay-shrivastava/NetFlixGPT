@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Signup = () => {
   const [email, setEmail] = useState(""); //Q. what to give as initial value , empty string or null
@@ -20,14 +21,14 @@ const Signup = () => {
     // If validation passed, clear error and proceed
     setError("");
 
+    const encodedPassword = btoa(password); // encode password
     const user = {
       email,
-      password,
+      password: encodedPassword,
     };
 
     // Save user data to localStorage
     localStorage.setItem("user", JSON.stringify(user));
-    localStorage.setItem("isLoggedIn", "true"); // Save as string
 
     // Navigate to login page
     navigate("/login");
@@ -44,32 +45,52 @@ const Signup = () => {
     }
   };
   return (
-    <div className="p-6 max-w-md mx-auto">
-      <h2 className="text-xl font-bold mb-4">Sign Up</h2>
-      {error && <p className="text-red-500 mb-2">{error}</p>}
-      <form onSubmit={handleSignup} className="flex flex-col gap-4">
-        <input
-          name="email"
-          type="email"
-          placeholder="Email"
-          className="border p-2 rounded"
-          onChange={handleChange}
-          value={email}
-        />
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          className="border p-2 rounded"
-          onChange={handleChange}
-          value={password}
-        />
-        <button type="submit" className="bg-blue-500 text-white py-2 rounded">
-          Sign Up
-        </button>
-      </form>
+    <div className="min-h-screen bg-gray-950 flex items-center justify-center px-4">
+      <div className="w-full max-w-md bg-black bg-opacity-70 p-8 rounded-lg shadow-lg">
+        <h2 className="text-2xl font-bold text-white mb-6 text-center">
+          Create Your Account
+        </h2>
+
+        {error && (
+          <p className="text-red-500 text-sm mb-4 text-center">{error}</p>
+        )}
+
+        <form onSubmit={handleSignup} className="flex flex-col gap-4">
+          <input
+            name="email"
+            type="email"
+            placeholder="Email"
+            className="w-full px-4 py-2 rounded bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-red-600"
+            onChange={handleChange}
+            value={email}
+          />
+
+          <input
+            name="password"
+            type="password"
+            placeholder="Password"
+            className="w-full px-4 py-2 rounded bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-red-600"
+            onChange={handleChange}
+            value={password}
+          />
+
+          <button
+            type="submit"
+            className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2 rounded transition duration-300"
+          >
+            Sign Up
+          </button>
+        </form>
+
+        <p className="text-sm text-gray-400 mt-4 text-center">
+          Already have an account?{" "}
+          <Link to="/login" className="text-red-500 hover:underline">
+            Login
+          </Link>
+        </p>
+      </div>
     </div>
   );
 };
 
-export default signup;
+export default Signup;
