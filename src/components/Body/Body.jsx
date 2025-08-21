@@ -5,6 +5,7 @@ import Browse from "../../pages/Browse/Browse";
 import Landing from "../../pages/LandingPage/Landing";
 import { createBrowserRouter } from "react-router-dom";
 import { RouterProvider } from "react-router-dom";
+import ProtectedRoute from "../Utility/ProtectedRoute";
 
 const Body = () => {
   const appRouter = createBrowserRouter([
@@ -22,7 +23,11 @@ const Body = () => {
     },
     {
       path: "/browse",
-      element: <Browse />,
+      element: (
+        <ProtectedRoute>
+          <Browse />
+        </ProtectedRoute>
+      ),
     },
   ]);
 
